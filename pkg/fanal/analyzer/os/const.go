@@ -63,6 +63,9 @@ const (
 
 	// Chainguard is done
 	Chainguard = "chainguard"
+
+	// Kylin is done
+	Kylin = "kylin"
 )
 
 var AnalyzeOSError = xerrors.New("unable to analyze OS information")

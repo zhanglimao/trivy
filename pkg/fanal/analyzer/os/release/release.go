@@ -6,11 +6,10 @@ import (
 	"os"
 	"strings"
 
-	"golang.org/x/exp/slices"
-
 	"github.com/zhanglimao/trivy/pkg/fanal/analyzer"
 	aos "github.com/zhanglimao/trivy/pkg/fanal/analyzer/os"
 	"github.com/zhanglimao/trivy/pkg/fanal/types"
+	"golang.org/x/exp/slices"
 )
 
 func init() {
@@ -63,6 +62,8 @@ func (a osReleaseAnalyzer) Analyze(_ context.Context, input analyzer.AnalysisInp
 			family = aos.Wolfi
 		case "chainguard":
 			family = aos.Chainguard
+		case "kylin":
+			family = aos.Kylin
 		}
 
 		if family != "" && versionID != "" {

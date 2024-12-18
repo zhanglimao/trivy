@@ -6,21 +6,20 @@ import (
 	"strings"
 	"time"
 
-	version "github.com/knqyf263/go-rpm-version"
-	"golang.org/x/exp/maps"
-	"golang.org/x/exp/slices"
-	"golang.org/x/xerrors"
-	"k8s.io/utils/clock"
-
 	dbTypes "github.com/aquasecurity/trivy-db/pkg/types"
 	ustrings "github.com/aquasecurity/trivy-db/pkg/utils/strings"
 	redhat "github.com/aquasecurity/trivy-db/pkg/vulnsrc/redhat-oval"
 	"github.com/aquasecurity/trivy-db/pkg/vulnsrc/vulnerability"
+	version "github.com/knqyf263/go-rpm-version"
 	"github.com/zhanglimao/trivy/pkg/fanal/analyzer/os"
 	ftypes "github.com/zhanglimao/trivy/pkg/fanal/types"
 	"github.com/zhanglimao/trivy/pkg/log"
 	"github.com/zhanglimao/trivy/pkg/scanner/utils"
 	"github.com/zhanglimao/trivy/pkg/types"
+	"golang.org/x/exp/maps"
+	"golang.org/x/exp/slices"
+	"golang.org/x/xerrors"
+	"k8s.io/utils/clock"
 )
 
 var (
@@ -58,6 +57,9 @@ var (
 		"6": time.Date(2020, 11, 30, 23, 59, 59, 0, time.UTC),
 		"7": time.Date(2024, 6, 30, 23, 59, 59, 0, time.UTC),
 		"8": time.Date(2021, 12, 31, 23, 59, 59, 0, time.UTC),
+	}
+	kylinEOLDates = map[string]time.Time{
+		"v10": time.Date(2050, 12, 31, 23, 59, 59, 0, time.UTC),
 	}
 	excludedVendorsSuffix = []string{
 		".remi",
@@ -215,10 +217,13 @@ func (s *Scanner) IsSupportedVersion(osFamily, osVer string) bool {
 
 	var eolDate time.Time
 	var ok bool
-	if osFamily == os.RedHat {
+	switch osFamily {
+	case os.RedHat:
 		eolDate, ok = redhatEOLDates[osVer]
-	} else if osFamily == os.CentOS {
+	case os.CentOS:
 		eolDate, ok = centosEOLDates[osVer]
+	case os.Kylin:
+		eolDate, ok = kylinEOLDates[osVer]
 	}
 	if !ok {
 		log.Logger.Warnf("This OS version is not on the EOL list: %s %s", osFamily, osVer)
