@@ -3,8 +3,6 @@ package ospkg
 import (
 	"time"
 
-	"golang.org/x/xerrors"
-
 	"github.com/zhanglimao/trivy/pkg/detector/ospkg/alma"
 	"github.com/zhanglimao/trivy/pkg/detector/ospkg/alpine"
 	"github.com/zhanglimao/trivy/pkg/detector/ospkg/amazon"
@@ -22,6 +20,7 @@ import (
 	ftypes "github.com/zhanglimao/trivy/pkg/fanal/types"
 	"github.com/zhanglimao/trivy/pkg/log"
 	"github.com/zhanglimao/trivy/pkg/types"
+	"golang.org/x/xerrors"
 )
 
 var (
@@ -44,6 +43,7 @@ var (
 		fos.Photon:       photon.NewScanner(),
 		fos.Wolfi:        wolfi.NewScanner(),
 		fos.Chainguard:   chainguard.NewScanner(),
+		fos.Kylin:        ubuntu.NewScanner(),
 	}
 )
 

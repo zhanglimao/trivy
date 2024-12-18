@@ -23,6 +23,7 @@ const (
 	TypeSUSE       Type = "suse"
 	TypeUbuntu     Type = "ubuntu"
 	TypeUbuntuESM  Type = "ubuntu-esm"
+	TypeKylin      Type = "kylin"
 
 	// OS Package
 	TypeApk         Type = "apk"
@@ -147,6 +148,7 @@ var (
 		TypeRedHatBase,
 		TypeSUSE,
 		TypeUbuntu,
+		TypeKylin,
 		TypeApk,
 		TypeDpkg,
 		TypeDpkgLicense,

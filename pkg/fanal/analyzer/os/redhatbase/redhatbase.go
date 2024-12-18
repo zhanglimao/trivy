@@ -8,15 +8,11 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/zhanglimao/trivy/pkg/fanal/utils"
-
-	"github.com/zhanglimao/trivy/pkg/fanal/types"
-
-	"golang.org/x/xerrors"
-
-	aos "github.com/zhanglimao/trivy/pkg/fanal/analyzer/os"
-
 	"github.com/zhanglimao/trivy/pkg/fanal/analyzer"
+	aos "github.com/zhanglimao/trivy/pkg/fanal/analyzer/os"
+	"github.com/zhanglimao/trivy/pkg/fanal/types"
+	"github.com/zhanglimao/trivy/pkg/fanal/utils"
+	"golang.org/x/xerrors"
 )
 
 const redhatAnalyzerVersion = 1
@@ -25,7 +21,7 @@ func init() {
 	analyzer.RegisterAnalyzer(&redhatOSAnalyzer{})
 }
 
-var redhatRe = regexp.MustCompile(`(.*) release (\d[\d\.]*)`)
+var redhatRe = regexp.MustCompile(`(.*) release (V?\d[\d\.]*)`)
 
 type redhatOSAnalyzer struct{}
 
@@ -60,6 +56,8 @@ func (a redhatOSAnalyzer) parseRelease(r io.Reader) (types.OS, error) {
 			return types.OS{Family: aos.Oracle, Name: result[2]}, nil
 		case "fedora", "fedora linux":
 			return types.OS{Family: aos.Fedora, Name: result[2]}, nil
+		case "kylin", "kylin linux", "kylin linux advanced server":
+			return types.OS{Family: aos.Kylin, Name: result[2]}, nil
 		default:
 			return types.OS{Family: aos.RedHat, Name: result[2]}, nil
 		}
@@ -72,7 +70,7 @@ func (a redhatOSAnalyzer) Required(filePath string, _ os.FileInfo) bool {
 }
 
 func (a redhatOSAnalyzer) requiredFiles() []string {
-	return []string{"etc/redhat-release"}
+	return []string{"etc/redhat-release", "etc/kylin-release"}
 }
 
 func (a redhatOSAnalyzer) Type() analyzer.Type {

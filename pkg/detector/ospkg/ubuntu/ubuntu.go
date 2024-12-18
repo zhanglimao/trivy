@@ -4,15 +4,14 @@ import (
 	"strings"
 	"time"
 
-	version "github.com/knqyf263/go-deb-version"
-	"golang.org/x/xerrors"
-	"k8s.io/utils/clock"
-
 	"github.com/aquasecurity/trivy-db/pkg/vulnsrc/ubuntu"
+	version "github.com/knqyf263/go-deb-version"
 	ftypes "github.com/zhanglimao/trivy/pkg/fanal/types"
 	"github.com/zhanglimao/trivy/pkg/log"
 	"github.com/zhanglimao/trivy/pkg/scanner/utils"
 	"github.com/zhanglimao/trivy/pkg/types"
+	"golang.org/x/xerrors"
+	"k8s.io/utils/clock"
 )
 
 var (
@@ -59,6 +58,7 @@ var (
 		"22.04":     time.Date(2027, 4, 23, 23, 59, 59, 0, time.UTC),
 		"22.10":     time.Date(2023, 7, 20, 23, 59, 59, 0, time.UTC),
 		"23.04":     time.Date(2024, 1, 20, 23, 59, 59, 0, time.UTC),
+		"v10":       time.Date(3000, 1, 20, 23, 59, 59, 0, time.UTC),
 	}
 )
 

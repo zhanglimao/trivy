@@ -7,12 +7,9 @@ import (
 	"sort"
 	"strings"
 
+	dbTypes "github.com/aquasecurity/trivy-db/pkg/types"
 	"github.com/google/wire"
 	"github.com/samber/lo"
-	"golang.org/x/exp/slices"
-	"golang.org/x/xerrors"
-
-	dbTypes "github.com/aquasecurity/trivy-db/pkg/types"
 	"github.com/zhanglimao/trivy/pkg/fanal/analyzer"
 	_ "github.com/zhanglimao/trivy/pkg/fanal/analyzer/all"
 	"github.com/zhanglimao/trivy/pkg/fanal/applier"
@@ -25,6 +22,8 @@ import (
 	"github.com/zhanglimao/trivy/pkg/scanner/post"
 	"github.com/zhanglimao/trivy/pkg/types"
 	"github.com/zhanglimao/trivy/pkg/vulnerability"
+	"golang.org/x/exp/slices"
+	"golang.org/x/xerrors"
 )
 
 // SuperSet binds dependencies for Local scan
